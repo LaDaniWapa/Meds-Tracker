@@ -11,7 +11,7 @@ class DatabaseHelper {
             appDatabase = Room.databaseBuilder(
                 context,
                 AppDatabase::class.java,
-                "app_database"
+                "medications-db"
             ).build()
         }
 

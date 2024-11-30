@@ -1,4 +1,4 @@
-package com.daniela.medstracker.ui.pages
+package com.daniela.medstracker.ui.pages.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable

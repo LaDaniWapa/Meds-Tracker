@@ -4,34 +4,23 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.daniela.medstracker.data.DatabaseHelper
 import com.daniela.medstracker.ui.components.BottomNavBar
 import com.daniela.medstracker.ui.navigation.HomePage
 import com.daniela.medstracker.ui.navigation.MedicationPage
 import com.daniela.medstracker.ui.navigation.NavItem
-import com.daniela.medstracker.ui.pages.HomePage
-import com.daniela.medstracker.ui.pages.MedsPage
+import com.daniela.medstracker.ui.pages.home.HomePage
+import com.daniela.medstracker.ui.pages.meds.MedsPage
+import com.daniela.medstracker.ui.pages.meds.MedsViewModel
 import com.daniela.medstracker.ui.theme.MedsTrackerTheme
 
 class MainActivity : ComponentActivity() {
@@ -46,7 +35,7 @@ class MainActivity : ComponentActivity() {
 
             val navItems = listOf(
                 NavItem(
-                    label = "Symmary",
+                    label = "Summary",
                     icon = painterResource(id = R.drawable.heart),
                     page = HomePage
                 ),
@@ -83,11 +72,17 @@ class MainActivity : ComponentActivity() {
                             HomePage(modifier = baseModifier)
                         }
                         composable<MedicationPage> {
-                            MedsPage(modifier = baseModifier)
+                            MedsPage(modifier = baseModifier, viewModel = medsViewModel())
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun medsViewModel(): MedsViewModel {
+        val database = DatabaseHelper().getAppDatabase(this)
+
+        return MedsViewModel(database.medicationDao())
     }
 }

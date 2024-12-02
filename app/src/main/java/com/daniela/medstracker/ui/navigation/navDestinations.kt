@@ -11,6 +11,9 @@ object HomePage : Page
 @Serializable
 object MedicationPage : Page
 
+@Serializable
+object NewMedicationPage : Page
+
 data class NavItem(
     val label: String,
     val icon: Painter,
